@@ -1,11 +1,5 @@
 package com.visma.spring.model.account;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.joda.ser.*;
-import com.visma.spring.JodaMoneyDeserializer;
-import com.visma.spring.JodaMoneySerializer;
 import org.joda.money.Money;
 import org.joda.time.LocalDateTime;
 
@@ -34,24 +28,12 @@ public class Transaction implements Serializable, Comparable<Transaction> {
         this.timestamp = timestamp;
     }
 
-    @JsonSerialize(using = JodaMoneySerializer.class)
     public Money getAmount() {
         return amount;
     }
 
-    @JsonDeserialize(using = JodaMoneyDeserializer.class)
-    public void setAmount(Money amount) {
-        this.amount = amount;
-    }
-
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     public LocalDateTime getTimestamp() {
         return timestamp;
-    }
-
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
     }
 
     public long getId() {
