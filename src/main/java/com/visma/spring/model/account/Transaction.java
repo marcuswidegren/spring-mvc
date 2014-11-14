@@ -40,10 +40,6 @@ public class Transaction implements Serializable, Comparable<Transaction> {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     @Override
     public boolean equals(Object secondObject) {
         if(!(secondObject instanceof Transaction)) {

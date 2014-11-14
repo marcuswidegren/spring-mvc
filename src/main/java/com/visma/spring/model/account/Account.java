@@ -29,10 +29,6 @@ public class Account implements Serializable {
         this.totalAmount = amount;
     }
 
-    public Account(Long id) {
-        this.id = id;
-    }
-
     public Account(Long id, Money totalAmount, Set<Transaction> transactions) {
         this.id = id;
         this.totalAmount = totalAmount;
@@ -40,10 +36,6 @@ public class Account implements Serializable {
     }
 
     protected Account(){} // for hibernate
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getId() {
         return id;
