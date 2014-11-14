@@ -20,12 +20,16 @@ public class Transaction implements Serializable, Comparable<Transaction> {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
+    @Column(nullable = false)
+    private String category;
+
     protected Transaction(){}
 
-    public Transaction(long id, Money amount, LocalDateTime timestamp) {
+    public Transaction(long id, Money amount, LocalDateTime timestamp, String category) {
         this.id = id;
         this.amount = amount;
         this.timestamp = timestamp;
+        this.category = category;
     }
 
     public Money getAmount() {
@@ -40,6 +44,10 @@ public class Transaction implements Serializable, Comparable<Transaction> {
         return id;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     @Override
     public boolean equals(Object secondObject) {
         if(!(secondObject instanceof Transaction)) {
@@ -48,7 +56,8 @@ public class Transaction implements Serializable, Comparable<Transaction> {
         Transaction secondTransaction = (Transaction) secondObject;
         return  Objects.equals(id, secondTransaction.getId()) &&
                 Objects.equals(timestamp, secondTransaction.getTimestamp()) &&
-                Objects.equals(amount, secondTransaction.getAmount());
+                Objects.equals(amount, secondTransaction.getAmount()) &&
+                Objects.equals(category, secondTransaction.getCategory());
     }
 
     @Override
@@ -56,6 +65,7 @@ public class Transaction implements Serializable, Comparable<Transaction> {
         int result = (int)id;
         result = result * 31 + timestamp.hashCode();
         result = result * 31 + amount.hashCode();
+        result = result * 31 + category.hashCode();
         return result;
     }
 

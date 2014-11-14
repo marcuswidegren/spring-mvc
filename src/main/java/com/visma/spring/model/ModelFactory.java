@@ -18,7 +18,7 @@ public class ModelFactory {
     }
 
     public static Transaction fromRest(com.visma.cash.restmodel.Transaction transactionFromRest) {
-        return new Transaction(transactionFromRest.getId(), transactionFromRest.getAmount(), transactionFromRest.getTimestamp());
+        return new Transaction(transactionFromRest.getId(), transactionFromRest.getAmount(), transactionFromRest.getTimestamp(), transactionFromRest.getCategory());
     }
 
     private static Set<Transaction> fromRest(Collection<com.visma.cash.restmodel.Transaction> transactions) {
@@ -43,7 +43,7 @@ public class ModelFactory {
     }
 
     public static com.visma.cash.restmodel.Transaction fromDao(Transaction transactionFromDao) {
-        return new com.visma.cash.restmodel.Transaction(transactionFromDao.getId(), transactionFromDao.getAmount(), transactionFromDao.getTimestamp());
+        return new com.visma.cash.restmodel.Transaction(transactionFromDao.getId(), transactionFromDao.getAmount(), transactionFromDao.getTimestamp(), transactionFromDao.getCategory());
     }
 
     private static Set<com.visma.cash.restmodel.Transaction> fromDao(Set<Transaction> transactions) {
