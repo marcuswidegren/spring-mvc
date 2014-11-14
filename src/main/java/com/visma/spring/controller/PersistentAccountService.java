@@ -1,15 +1,14 @@
 package com.visma.spring.controller;
 
-import com.visma.spring.model.account.Account;
+import com.visma.cash.restmodel.Account;
+import com.visma.cash.restmodel.Transaction;
 import com.visma.spring.model.account.AccountDAO;
-import com.visma.spring.model.account.Transaction;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import static com.visma.spring.model.ModelFactory.*;
 
 import java.util.Optional;
 
@@ -27,22 +26,19 @@ public class PersistentAccountService implements AccountService {
     @Override
     @Transactional
     public Account createAccount() {
-        return accountDAO.createAccount();
+        return fromDao(accountDAO.createAccount());
     }
 
     @Override
     @Transactional
     public Optional<Account> getAccount(Long id) {
-        return accountDAO.getAccount(id);
+        return fromDao(accountDAO.getAccount(id));
     }
 
     @Override
     @Transactional
     public Transaction addTransaction(Account account, Transaction transaction) {
-        if(transaction.getTimestamp() == null) {
-            transaction.setTimestamp(LocalDateTime.now());
-        }
-        return accountDAO.addTransaction(account, transaction);
+        return fromDao(accountDAO.addTransaction(fromRest(account), fromRest(transaction)));
     }
 
     @Override
@@ -53,8 +49,7 @@ public class PersistentAccountService implements AccountService {
     @Override
     @Transactional
     public Transaction deleteTransaction(Account account, Transaction transaction) {
-        account.getTransactions().remove(transaction);
-        accountDAO.persistAccount(account);
+        accountDAO.deleteTransaction(fromRest(account), fromRest(transaction));
         return transaction;
     }
 }

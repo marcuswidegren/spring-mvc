@@ -4,12 +4,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.joda.ser.*;
-import com.visma.spring.DateTimeDeserializer;
-import com.visma.spring.DateTimeSerializer;
 import com.visma.spring.JodaMoneyDeserializer;
 import com.visma.spring.JodaMoneySerializer;
 import org.joda.money.Money;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import javax.persistence.*;
@@ -29,7 +26,13 @@ public class Transaction implements Serializable, Comparable<Transaction> {
     @Column(nullable = false)
     private LocalDateTime timestamp;
 
-    public Transaction(){}
+    protected Transaction(){}
+
+    public Transaction(long id, Money amount, LocalDateTime timestamp) {
+        this.id = id;
+        this.amount = amount;
+        this.timestamp = timestamp;
+    }
 
     @JsonSerialize(using = JodaMoneySerializer.class)
     public Money getAmount() {

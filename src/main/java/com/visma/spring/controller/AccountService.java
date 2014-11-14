@@ -1,9 +1,10 @@
 package com.visma.spring.controller;
 
-import com.visma.spring.model.account.Account;
-import com.visma.spring.model.account.Transaction;
+import com.visma.cash.restmodel.Account;
+import com.visma.cash.restmodel.Transaction;
 
 import java.util.Optional;
+
 
 public interface AccountService {
 

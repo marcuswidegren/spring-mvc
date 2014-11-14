@@ -29,12 +29,10 @@ public class Account implements Serializable {
     @Column(nullable = false)
     private Money totalAmount;
 
-    @JsonSerialize(using = JodaMoneySerializer.class)
     public Money getAmount() {
         return totalAmount;
     }
 
-    @JsonDeserialize(using = JodaMoneyDeserializer.class)
     public void setAmount(Money amount) {
         this.totalAmount = amount;
     }
@@ -43,7 +41,13 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public Account(){} // for hibernate
+    public Account(Long id, Money totalAmount, Set<Transaction> transactions) {
+        this.id = id;
+        this.totalAmount = totalAmount;
+        this.transactions = transactions;
+    }
+
+    protected Account(){} // for hibernate
 
     public void setId(Long id) {
         this.id = id;
@@ -58,14 +62,7 @@ public class Account implements Serializable {
         totalAmount = totalAmount.plus(transaction.getAmount());
     }
 
-    @JsonDeserialize
     public Set<Transaction> getTransactions() {
         return transactions;
     }
-
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
-
-
 }

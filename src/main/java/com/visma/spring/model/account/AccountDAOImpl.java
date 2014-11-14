@@ -31,16 +31,20 @@ public class AccountDAOImpl implements AccountDAO {
         return Optional.ofNullable((Account)sessionFactory.getCurrentSession().get(Account.class, id));
     }
 
-    @Override
     public Transaction addTransaction(Account account, Transaction transaction) {
         account.addTransaction(transaction);
         sessionFactory.getCurrentSession().update(account);
         return transaction;
     }
 
-    @Override
     public void persistAccount(Account account) {
         sessionFactory.getCurrentSession().update(account);
+    }
+
+    @Override
+    public void deleteTransaction(Account account, Transaction transaction) {
+        account.getTransactions().remove(transaction);
+        persistAccount(account);
     }
 
 }

@@ -31,7 +31,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return sessionFactory.getCurrentSession().createCriteria(Employee.class).list();
+        @SuppressWarnings("unchecked")
+        List<Employee> allEmployees =sessionFactory.getCurrentSession().createCriteria(Employee.class).list();
+        return allEmployees;
     }
 
     @Override

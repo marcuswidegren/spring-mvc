@@ -1,18 +1,14 @@
 package com.visma.spring.controller;
 
-import com.visma.spring.model.account.Account;
-import com.visma.spring.model.account.Transaction;
-import org.joda.time.LocalDateTime;
+import com.visma.cash.restmodel.Account;
+import com.visma.cash.restmodel.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Vector;
+
 
 @RestController
 public class AccountController {
