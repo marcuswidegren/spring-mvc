@@ -13,4 +13,8 @@ public interface AccountService {
 
     public Transaction addTransaction(Account account, Transaction transaction);
 
+    public Optional<Transaction> getTransaction(Account account, long transactionId);
+
+    public Transaction deleteTransaction(Account account, Transaction transaction);
+
 }

@@ -14,11 +14,11 @@ import java.io.IOException;
 
 public class DateTimeSerializer extends JsonSerializer<DateTime> {
 
-    @Override
-    public void serialize(DateTime dateTime, JsonGenerator jgen,
-                          SerializerProvider serProv) throws IOException,
-            JsonProcessingException {
+@Override
+public void serialize(DateTime dateTime, JsonGenerator jgen,
+        SerializerProvider serProv) throws IOException,
+        JsonProcessingException {
         System.out.println("Serializing: " + dateTime.toString());
         jgen.writeString(Long.toString(dateTime.getMillis()));
-    }
-}
+        }
+        }

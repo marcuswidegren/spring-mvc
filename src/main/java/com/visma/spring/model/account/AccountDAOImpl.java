@@ -1,6 +1,8 @@
 package com.visma.spring.model.account;
 
 import org.hibernate.SessionFactory;
+import org.joda.money.CurrencyUnit;
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,7 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public Account createAccount() {
         Account account = new Account();
+        account.setAmount(Money.zero(CurrencyUnit.EUR));
         sessionFactory.getCurrentSession().persist(account);
         return account;
     }
@@ -33,6 +36,11 @@ public class AccountDAOImpl implements AccountDAO {
         account.addTransaction(transaction);
         sessionFactory.getCurrentSession().update(account);
         return transaction;
+    }
+
+    @Override
+    public void persistAccount(Account account) {
+        sessionFactory.getCurrentSession().update(account);
     }
 
 }

@@ -10,4 +10,6 @@ public interface AccountDAO {
 
     public Transaction addTransaction(Account account, Transaction transaction);
 
+    public void persistAccount(Account account);
+
 }

@@ -2,6 +2,8 @@ package com.visma.spring.model.account;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.*;
 import com.visma.spring.DateTimeDeserializer;
 import com.visma.spring.DateTimeSerializer;
 import com.visma.spring.JodaMoneyDeserializer;
@@ -15,7 +17,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(name = "account_transaction")
-public class Transaction implements Serializable {
+public class Transaction implements Serializable, Comparable<Transaction> {
 
     @Id
     @GeneratedValue
@@ -25,7 +27,7 @@ public class Transaction implements Serializable {
     private Money amount;
 
     @Column(nullable = false)
-    private DateTime timestamp;
+    private LocalDateTime timestamp;
 
     public Transaction(){}
 
@@ -39,13 +41,13 @@ public class Transaction implements Serializable {
         this.amount = amount;
     }
 
-    @JsonSerialize(using = DateTimeSerializer.class)
-    public DateTime getTimestamp() {
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    public void setTimestamp(DateTime timestamp) {
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -74,5 +76,10 @@ public class Transaction implements Serializable {
         result = result * 31 + timestamp.hashCode();
         result = result * 31 + amount.hashCode();
         return result;
+    }
+
+    @Override
+    public int compareTo(Transaction o) {
+        return timestamp.compareTo(o.getTimestamp());
     }
 }

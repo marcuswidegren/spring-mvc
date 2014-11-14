@@ -4,6 +4,8 @@ package com.visma.spring.controller;
 import com.visma.spring.controller.AccountService;
 import com.visma.spring.model.account.Account;
 import com.visma.spring.model.account.Transaction;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,8 +34,22 @@ public class InMemoryAcccountService implements AccountService {
     @Override
     public Transaction addTransaction(Account account, Transaction transaction) {
         accounts.remove(account);
+        if(transaction.getTimestamp() == null) {
+            transaction.setTimestamp(LocalDateTime.now());
+        }
         account.addTransaction(transaction);
         accounts.add(account);
         return transaction;
+    }
+
+    @Override
+    public Optional<Transaction> getTransaction(Account account, long transactionId) {
+        return null;
+    }
+
+
+    @Override
+    public Transaction deleteTransaction(Account account, Transaction transaction) {
+        return null;
     }
 }

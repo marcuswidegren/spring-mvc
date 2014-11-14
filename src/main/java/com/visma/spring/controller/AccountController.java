@@ -20,7 +20,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @Autowired
-    public AccountController(@Qualifier(value = "inMemoryAcccountService") AccountService accountService) {
+    public AccountController(@Qualifier(value = "persistentAccountService") AccountService accountService) {
         this.accountService = accountService;
     }
 
@@ -42,5 +42,23 @@ public class AccountController {
     @RequestMapping(value = "/rest/account/{id}/transaction", method = RequestMethod.POST)
     public Transaction addTransaction(@PathVariable Long id, @RequestBody Transaction transaction) {
         return accountService.addTransaction(getAccount(id), transaction);
+    }
+
+    @RequestMapping(value = "/rest/account/{id}/transaction/{transactionId}", method = RequestMethod.GET)
+    public Transaction getTransaction(@PathVariable Long id, @PathVariable long transactionId) {
+        Account account = getAccount(id);
+        Optional<Transaction> transaction = accountService.getTransaction(account, transactionId);
+        if(transaction.isPresent()) {
+            return transaction.get();
+        } else {
+            throw new ResourceNotFoundException();
+        }
+    }
+
+    @RequestMapping(value = "/rest/account/{id}/transaction/{transactionId}", method = RequestMethod.DELETE)
+    public Transaction deleteTransaction(@PathVariable Long id, @PathVariable long transactionId) {
+        Account account = getAccount(id);
+        Transaction transaction = getTransaction(id, transactionId);
+        return accountService.deleteTransaction(account, transaction);
     }
 }
