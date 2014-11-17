@@ -5,6 +5,7 @@ import com.visma.cash.restmodel.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -56,5 +57,10 @@ public class AccountController {
         Account account = getAccount(id);
         Transaction transaction = getTransaction(id, transactionId);
         return accountService.deleteTransaction(account, transaction);
+    }
+
+    @RequestMapping(value = "/rest/ping", method = RequestMethod.GET)
+    public ResponseEntity<String> ping() {
+        return ResponseEntity.ok("OK!");
     }
 }
